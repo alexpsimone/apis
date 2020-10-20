@@ -87,11 +87,12 @@ def get_event_details(id):
     print(f"data = {data}")
     event_name = data['name']
     start_date = data['dates']['start']['localDate']
-    # # payload['venue'] = place
+    venues = data['_embedded']['venues'][0]['name']
 
     return render_template('event-details.html', 
                             event_name=event_name,
-                            start_date=start_date)
+                            start_date=start_date,
+                            venues=venues)
 
 
 if __name__ == '__main__':
