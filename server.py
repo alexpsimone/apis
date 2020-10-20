@@ -90,6 +90,7 @@ def get_event_details(id):
     start_date = data_event['dates']['start']['localDate']
     venues = data_event['_embedded']['venues'][0]['name']
     image = data_event['images'][0]['url']
+    event_url = data_event['url']
 
 
     res_class = requests.get(url_class, params=payload_event)
@@ -100,7 +101,8 @@ def get_event_details(id):
                             event_name=event_name,
                             start_date=start_date,
                             venues=venues,
-                            image=image)
+                            image=image,
+                            event_url=event_url)
 
 
 if __name__ == '__main__':
