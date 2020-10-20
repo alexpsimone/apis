@@ -61,14 +61,8 @@ def find_afterparties():
     payload['sort'] = sort
 
     res = requests.get(url, params=payload)
-
     data = res.json()
-
     events = data['_embedded']['events']
-
-    # data = {'Test': ['This is just some test data'],
-            # 'page': {'totalElements': 1}}
-    # events = []
 
     return render_template('search-results.html',
                            pformat=pformat,
@@ -85,9 +79,19 @@ def find_afterparties():
 def get_event_details(id):
     """View the details of an event."""
 
-    # TODO: Finish implementing this view function
+    url = 'https://app.ticketmaster.com/discovery/v2/events/' + id
+    payload = {'apikey': API_KEY, 'id': id}
 
-    return render_template('event-details.html')
+    res = requests.get(url, params=payload)
+    data = res.json()
+    print(f"data = {data}")
+    event_name = data['name']
+    start_date = data['dates']['start']['localDate']
+    # # payload['venue'] = place
+
+    return render_template('event-details.html', 
+                            event_name=event_name,
+                            start_date=start_date)
 
 
 if __name__ == '__main__':
