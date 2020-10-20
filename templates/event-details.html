@@ -22,16 +22,8 @@
 
   <div class="row">
     <div class="col col-md-4">
-      {#
-        TODO: Replace EVENT IMAGE URL with actual URL to one of the
-        event images
-      #}
       <img src="{{ image }}">
       <p>
-        {#
-          TODO: Replace EVENT TICKETMASTER URL with URL to event's
-          Ticketmaster page
-        #}
         <a href="{{ event_url}}" target="_blank">
           Go to Ticketmaster page
         </a>
@@ -40,29 +32,18 @@
 
     <div class="col">
       <h3>Start date</h3>
-      {# TODO: Replace EVENT START DATE with event's start date #}
       <p>{{ start_date }}</p>
 
       <h3>Venues</h3>
       <ul>
-        {#
-          TODO: Remove placeholder <li> tag & loop over all event venues to
-          generate an `li` element for each venue.
-
-          Each `li` should contain the name of a venue.
-        #}
         <li>{{ venues }}</li>
       </ul>
 
       <h3>Classifications</h3>
       <ul>
-        {#
-          TODO: Remove placeholder <li> tag & loop over all event
-          classifications to generate an `li` element for each classification.
-
-          Each `li` should contain the name of the classification's *genre*.
-        #}
-        <li>PLACEHOLDER</li>
+        {% for classification in classifications %}
+           <li>{{ classification }}: {{classifications[classification]}}</li>
+        {% endfor %}
       </ul>
     </div>
   </div>

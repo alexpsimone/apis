@@ -79,30 +79,31 @@ def find_afterparties():
 def get_event_details(id):
     """View the details of an event."""
 
-    url_eventid = 'https://app.ticketmaster.com/discovery/v2/events/' + id
-    url_class = 'https://app.ticketmaster.com/discovery/v2/classifications' + id
-    payload_event = {'apikey': API_KEY}
-    payload_class = {'apikey': API_KEY}
+    url = 'https://app.ticketmaster.com/discovery/v2/events/' + id
+    payload = {'apikey': API_KEY}
 
-    res_event = requests.get(url_eventid, params=payload_event)
-    data_event = res_event.json()
-    event_name = data_event['name']
-    start_date = data_event['dates']['start']['localDate']
-    venues = data_event['_embedded']['venues'][0]['name']
-    image = data_event['images'][0]['url']
-    event_url = data_event['url']
+    res = requests.get(url, params=payload)
+    data = res.json()
+    event_name = data['name']
+    start_date = data['dates']['start']['localDate']
+    venues = data['_embedded']['venues'][0]['name']
+    image = data['images'][0]['url']
+    event_url = data['url']
 
-
-    res_class = requests.get(url_class, params=payload_event)
-    data_class = res_class.json()
-    # print(f"data_class: {data_class}")
-
+    classifications = {}
+    classifications_list = data['classifications'][0]
+    classifications['segment'] = data['classifications'][0]['segment']['name']
+    classifications['genre'] = data['classifications'][0]['genre']['name']
+    classifications['subgenre'] = data['classifications'][0]['subGenre']['name']
+    print(classifications)
+    
     return render_template('event-details.html', 
                             event_name=event_name,
                             start_date=start_date,
                             venues=venues,
                             image=image,
-                            event_url=event_url)
+                            event_url=event_url,
+                            classifications=classifications)
 
 
 if __name__ == '__main__':
